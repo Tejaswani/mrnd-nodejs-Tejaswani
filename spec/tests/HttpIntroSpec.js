@@ -14,9 +14,9 @@ describe("HttpIntro Test Suite", function(){
     		 function(error, response, body){
 
 			// console.log(response);
-			expect(response.statusCode).toBe(200);
-			expect(response.statusMessage).toBe('OK');
-			expect(response.headers["content-type"]).toBe("text/html");
+			expect(response.statusCode).toBe(404);
+			expect(response.statusMessage).toBe('Not Found');
+			expect(response.headers["content-type"]).toBe("text/html; charset=UTF-8");
 
 			done();
     	});
@@ -33,9 +33,9 @@ describe("HttpIntro Test Suite", function(){
 	    		 function(error, response, body){
 
 				// console.log(response);
-				expect(response.statusCode).toBe(404);
-				expect(response.statusMessage).toBe('Not Found');
-				expect(response.headers["content-type"]).toBe("text/html; charset=UTF-8");
+				expect(response.statusCode).toBe(400);
+				expect(response.statusMessage).toBe('Bad Request');
+				expect(response.headers["content-type"]).toBe("application/json;charset=utf-8");
 
 				done();
 	    });
@@ -52,9 +52,9 @@ describe("HttpIntro Test Suite", function(){
 	    		 function(error, response, body){
 
 				// console.log(response);
-				expect(response.statusCode).toBe(404);
-				expect(response.statusMessage).toBe('Not Found');
-				expect(response.headers["content-type"]).toBe("text/html; charset=UTF-8");
+				expect(response.statusCode).toBe(200);
+				expect(response.statusMessage).toBe('OK');
+				expect(response.headers["content-type"]).toBe("application/json; charset=utf-8");
 
 				done();
 	    });
@@ -69,10 +69,10 @@ describe("HttpIntro Test Suite", function(){
 	    		{url: "http://api.openweathermap.org/data/2.5/weather?q=hyderabad",
 	    		proxy: "http://10.4.8.204:8080",
 	    		 timeout: 30000,
-	    		  json: false}, 
+	    		  json: true}, 
 	    		 function(error, response, body){
 
-				//console.log(response);
+				console.log(response);
 				expect(body.sys.country).toBe("IN");
 
 				done();
@@ -85,11 +85,11 @@ describe("HttpIntro Test Suite", function(){
 	    		{url: "http://api.openweathermap.org/data/2.5/weather?q=hyderabad&mode=xml",
 	    		proxy: "http://10.4.8.204:8080",
 	    		 timeout: 30000,
-	    		  json: true}, 
+	    		  json: false}, 
 	    		 function(error, response, body){
 
 				// console.log(response);
-				//expect(body.sys.country).toBe("IN");
+				expect(body.sys.country).toBe("IN");
 
 				done();
 		    });

@@ -4,12 +4,20 @@ var con = new Array(),i = 0;
 var msgs =new Array();
 /* GET contacts */
 router.get('/:id', function(req, res, next){
-	//var id = req.params.id;
-	console.log(con[req.params.id]);
-	res.send(con[req.params.id]);
+	var fs = require('fs');
+	var filename = req.params.id+"-Contact.json";
+	var path = 'E:/Softwares/mrnd/mrnd-nodejs-master/spec/tests/data/'+filename;
+	fs.openSync(path,'w');
+	var data = fs.readFileSync(path,encoding)
+	res.send(data);
 });
 
 router.post('/', function(req, res, next) {
+	console.log("hello");
+	var fs = require('fs');
+	var path = 'E:/Softwares/mrnd/mrnd-nodejs-master/spec/tests/data/0-Contact.json';
+//	fs.openSync(path,'w');
+	fs.writeFileSync(path,JSON.stringify(req.body));
 	con.push(req.body);
 	//console.log(req.body);
 	i+=1;
@@ -18,7 +26,10 @@ router.post('/', function(req, res, next) {
 });
 
 router.put('/:id', function(req, res, next) {
-	//console.log(req.body);
+	/*var fs = require('fs');
+	var path = 'E:/Softwares/mrnd/mrnd-nodejs-master/spec/tests/data/0-Contact.json';
+	fs.openSync(path,'r+');
+	fs.writeFileSync(path,JSON.stringify(req.body));*/
 	if(req.body.firstName!=undefined)
 		con[i-1].firstName = req.body.firstName;
 	if(req.body.lastName!=undefined)
@@ -27,7 +38,6 @@ router.put('/:id', function(req, res, next) {
 		con[i-1].phone = req.body.phone;
 	res.send(con[i-1]);
 });
-
 router.post('/:id/messages', function(req, res, next) {
 	//console.log(req.params.id);
 	if(msgs[req.params.id] == undefined)
